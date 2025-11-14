@@ -1,0 +1,4 @@
+City,Country,Temperature,Description,Humidity,WindSpeed,Condition,Timestamp
+Banjarmasin,ID,26,08,overcast clouds,94,0,81,Clouds,1763133816284
+Samarinda,ID,23,66,overcast clouds,98,0,21,Clouds,1763133893734
+Bandung,ID,24,21,light rain,100,0,57,Rain,1763133916371

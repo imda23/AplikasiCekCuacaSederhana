@@ -3,18 +3,52 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.ImageIcon;
 /**
  *
  * @author USER
  */
 public class WeatherAppGUI extends javax.swing.JFrame {
-
+    
+    private DefaultTableModel tableModel;
     /**
      * Creates new form WeatherAppGUI
      */
     public WeatherAppGUI() {
         initComponents();
+        setupTable();
+        loadFavoritesToComboBox();
+        setLocationRelativeTo(null); // Center window
+    }
+    
+    private void setupTable() {
+        String[] columns = {"Kota", "Negara", "Suhu (°C)", "Deskripsi", 
+                           "Kelembaban (%)", "Angin (m/s)", "Kondisi", "Waktu"};
+        tableModel = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Tidak bisa diedit
+            }
+        };
+        tableWeatherHistory.setModel(tableModel);
+    }
+    
+    private void loadFavoritesToComboBox() {
+        cmbFavorites.removeAllItems();
+        cmbFavorites.addItem("-- Pilih Kota Favorit --");
+        
+        List<String> favorites = FavoriteCities.loadFavorites();
+        for (String city : favorites) {
+            cmbFavorites.addItem(city);
+        }
     }
 
     /**
@@ -112,6 +146,11 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         btnCheckWeather.setBorderPainted(false);
         btnCheckWeather.setOpaque(true);
         btnCheckWeather.setPreferredSize(new java.awt.Dimension(140, 35));
+        btnCheckWeather.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckWeatherActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
@@ -132,6 +171,11 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         cmbFavorites.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         cmbFavorites.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbFavorites.setPreferredSize(new java.awt.Dimension(280, 35));
+        cmbFavorites.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbFavoritesItemStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -147,6 +191,11 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         btnAddFavorite.setBorderPainted(false);
         btnAddFavorite.setOpaque(true);
         btnAddFavorite.setPreferredSize(new java.awt.Dimension(150, 35));
+        btnAddFavorite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddFavoriteActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -160,6 +209,11 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         btnRemoveFavorite.setBorderPainted(false);
         btnRemoveFavorite.setOpaque(true);
         btnRemoveFavorite.setPreferredSize(new java.awt.Dimension(150, 35));
+        btnRemoveFavorite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveFavoriteActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
@@ -198,7 +252,6 @@ public class WeatherAppGUI extends javax.swing.JFrame {
 
         lblWeatherIcon.setBackground(new java.awt.Color(247, 250, 252));
         lblWeatherIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblWeatherIcon.setText("icon");
         lblWeatherIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(226, 232, 240)));
         lblWeatherIcon.setOpaque(true);
         lblWeatherIcon.setPreferredSize(new java.awt.Dimension(120, 120));
@@ -294,6 +347,11 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         btnSaveCSV.setBorderPainted(false);
         btnSaveCSV.setOpaque(true);
         btnSaveCSV.setPreferredSize(new java.awt.Dimension(200, 40));
+        btnSaveCSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveCSVActionPerformed(evt);
+            }
+        });
         panelButtons.add(btnSaveCSV);
 
         btnLoadHistory.setBackground(new java.awt.Color(56, 178, 172));
@@ -303,6 +361,11 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         btnLoadHistory.setBorderPainted(false);
         btnLoadHistory.setOpaque(true);
         btnLoadHistory.setPreferredSize(new java.awt.Dimension(200, 40));
+        btnLoadHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadHistoryActionPerformed(evt);
+            }
+        });
         panelButtons.add(btnLoadHistory);
 
         btnClearHistory.setBackground(new java.awt.Color(237, 137, 54));
@@ -323,6 +386,224 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCheckWeatherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckWeatherActionPerformed
+        String cityName = txtCityInput.getText().trim();
+    
+        if (cityName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Masukkan nama kota terlebih dahulu!", 
+                "Peringatan", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Tampilkan loading
+        btnCheckWeather.setEnabled(false);
+        btnCheckWeather.setText("Memuat...");
+
+        // Gunakan SwingWorker untuk async
+        SwingWorker<WeatherData, Void> worker = new SwingWorker<WeatherData, Void>() {
+            @Override
+            protected WeatherData doInBackground() throws Exception {
+                return WeatherAPI.getWeatherData(cityName);
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    WeatherData data = get();
+                    displayWeatherData(data);
+                    addToTable(data);
+
+                    // Simpan otomatis ke CSV
+                    FavoriteCities.saveWeatherToCSV(data);
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(WeatherAppGUI.this, 
+                        "Error: " + e.getMessage(), 
+                        "Error", 
+                        JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    btnCheckWeather.setEnabled(true);
+                    btnCheckWeather.setText("Cek Cuaca");
+                }
+            }
+        };
+
+        worker.execute();
+    }//GEN-LAST:event_btnCheckWeatherActionPerformed
+
+    private void btnAddFavoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFavoriteActionPerformed
+        String cityName = txtCityInput.getText().trim();
+    
+        if (cityName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Masukkan nama kota terlebih dahulu!", 
+                "Peringatan", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            FavoriteCities.saveFavorite(cityName);
+            loadFavoritesToComboBox();
+            JOptionPane.showMessageDialog(this, 
+                cityName + " berhasil ditambahkan ke favorit!", 
+                "Sukses", 
+                JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error menyimpan favorit: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAddFavoriteActionPerformed
+
+    private void btnRemoveFavoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFavoriteActionPerformed
+        String selected = (String) cmbFavorites.getSelectedItem();
+    
+        if (selected == null || selected.equals("-- Pilih Kota Favorit --")) {
+            JOptionPane.showMessageDialog(this, 
+                "Pilih kota dari ComboBox terlebih dahulu!", 
+                "Peringatan", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "Hapus " + selected + " dari favorit?", 
+            "Konfirmasi", 
+            JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                FavoriteCities.removeFavorite(selected);
+                loadFavoritesToComboBox();
+                JOptionPane.showMessageDialog(this, 
+                    selected + " berhasil dihapus dari favorit!", 
+                    "Sukses", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error menghapus favorit: " + e.getMessage(), 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnRemoveFavoriteActionPerformed
+
+    private void cmbFavoritesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbFavoritesItemStateChanged
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+            String selected = (String) cmbFavorites.getSelectedItem();
+            if (selected != null && !selected.equals("-- Pilih Kota Favorit --")) {
+                txtCityInput.setText(selected);
+            }
+        }
+    }//GEN-LAST:event_cmbFavoritesItemStateChanged
+
+    private void btnSaveCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveCSVActionPerformed
+        if (tableModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Tidak ada data untuk disimpan!", 
+                "Peringatan", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, 
+            "Data cuaca otomatis disimpan di file:\ndata/weather_history.csv", 
+            "Informasi", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnSaveCSVActionPerformed
+
+    private void btnLoadHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadHistoryActionPerformed
+        List<String[]> history = FavoriteCities.loadWeatherHistory();
+    
+        if (history.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Tidak ada riwayat cuaca yang tersimpan!", 
+                "Informasi", 
+                JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Clear table
+        tableModel.setRowCount(0);
+
+        // Load data
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        for (String[] row : history) {
+            String time = sdf.format(new Date(Long.parseLong(row[7])));
+            Object[] tableRow = {
+                row[0], // City
+                row[1], // Country
+                row[2], // Temperature
+                row[3], // Description
+                row[4], // Humidity
+                row[5], // Wind Speed
+                row[6], // Condition
+                time
+            };
+            tableModel.addRow(tableRow);
+        }
+
+        JOptionPane.showMessageDialog(this, 
+            history.size() + " data berhasil dimuat!", 
+            "Sukses", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnLoadHistoryActionPerformed
+    
+    private void displayWeatherData(WeatherData data) {
+        lblCityName.setText(data.getCityName() + ", " + data.getCountry());
+        lblTemperature.setText(String.format("%.1f °C", data.getTemperature()));
+        lblDescription.setText(capitalizeFirst(data.getDescription()));
+        lblHumidity.setText("Kelembaban: " + data.getHumidity() + "%");
+        lblWindSpeed.setText("Angin: " + data.getWindSpeed() + " m/s");
+
+        // Load icon
+        loadWeatherIcon(data.getIconName());
+    }
+
+    private void loadWeatherIcon(String iconName) {
+        try {
+            String path = "src/resources/" + iconName;
+            File iconFile = new File(path);
+
+            if (iconFile.exists()) {
+                ImageIcon icon = new ImageIcon(path);
+                Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                lblWeatherIcon.setIcon(new ImageIcon(img));
+            } else {
+                lblWeatherIcon.setText("(Icon tidak ditemukan)");
+            }
+        } catch (Exception e) {
+            lblWeatherIcon.setText("(Error loading icon)");
+        }
+    }
+
+    private String capitalizeFirst(String text) {
+        if (text == null || text.isEmpty()) return text;
+        return text.substring(0, 1).toUpperCase() + text.substring(1);
+    }
+
+    private void addToTable(WeatherData data) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String time = sdf.format(new Date(data.getTimestamp()));
+
+        Object[] row = {
+            data.getCityName(),
+            data.getCountry(),
+            String.format("%.1f", data.getTemperature()),
+            capitalizeFirst(data.getDescription()),
+            data.getHumidity(),
+            data.getWindSpeed(),
+            data.getWeatherCondition(),
+            time
+        };
+
+        tableModel.insertRow(0, row); // Insert di baris pertama
+    }
+    
     /**
      * @param args the command line arguments
      */
