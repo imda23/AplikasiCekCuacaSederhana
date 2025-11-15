@@ -2,3 +2,22 @@ City,Country,Temperature,Description,Humidity,WindSpeed,Condition,Timestamp
 Banjarmasin,ID,26,08,overcast clouds,94,0,81,Clouds,1763133816284
 Samarinda,ID,23,66,overcast clouds,98,0,21,Clouds,1763133893734
 Bandung,ID,24,21,light rain,100,0,57,Rain,1763133916371
+Banjarmasin,ID,25,08,overcast clouds,94,1,07,Clouds,1763138047982
+Banjarmasin,ID,25,08,overcast clouds,99,0,96,Clouds,1763163255207
+Banjarmasin,ID,25,08,overcast clouds,99,0,96,Clouds,1763163389145
+Palangkaraya,ID,25,35,overcast clouds,90,1,06,Clouds,1763163415444
+Banjarmasin,ID,25,08,light rain,96,1,38,Rain,1763222567089
+Banjarmasin,ID,26,08,overcast clouds,94,1,38,Clouds,1763224593586
+Banjarmasin,ID,26,08,overcast clouds,94,1,38,Clouds,1763224609679
+Banjarmasin,ID,26,08,overcast clouds,93,1,23,Clouds,1763224679945
+Banjarmasin,Indonesia,26,08,awan mendung,93,1,23,Clouds,1763225652757
+London,United Kingdom,11,99,awan mendung,92,2,57,Clouds,1763225680374
+Tokyo,Japan,12,02,sedikit berawan,67,3,09,Clouds,1763225709390
+Moskwa,Russia,-0,19,langit cerah,57,5,32,Clear,1763225737430
+Banjarmasin,Indonesia,26,08,awan mendung,93,1,23,Clouds,1763226090159
+Seoul,South Korea,2,76,langit cerah,100,0,51,Clear,1763226140431
+Banjarmasin,Indonesia,26,08,awan mendung,94,1,23,Clouds,1763226459749
+Barcelona,Spain,18,45,langit cerah,50,4,63,Clear,1763226473804
+Barcelona,Spain,17,95,langit cerah,51,5,14,Clear,1763227189865
+Barcelona,Spain,18,02,langit cerah,53,5,14,Clear,1763227457945
+Banjarmasin,Indonesia,26,08,awan mendung,94,1,23,Clouds,1763227582253

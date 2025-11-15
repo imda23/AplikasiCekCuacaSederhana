@@ -93,8 +93,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Aplikasi Cek Cuaca - Weather App");
-        setPreferredSize(new java.awt.Dimension(870, 1100));
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(850, 900));
 
         panelHeader.setBackground(new java.awt.Color(66, 153, 225));
         panelHeader.setPreferredSize(new java.awt.Dimension(850, 80));
@@ -114,7 +113,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         panelInput.setBackground(new java.awt.Color(237, 242, 247));
         panelInput.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(203, 213, 224), 2), javax.swing.BorderFactory.createEmptyBorder(15, 10, 15, 20)));
         panelInput.setMaximumSize(new java.awt.Dimension(10000, 160));
-        panelInput.setPreferredSize(new java.awt.Dimension(830, 160));
+        panelInput.setPreferredSize(new java.awt.Dimension(830, 140));
         panelInput.setLayout(new java.awt.GridBagLayout());
 
         lblInputCity.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -226,7 +225,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         panelWeatherResult.setBackground(new java.awt.Color(255, 255, 255));
         panelWeatherResult.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(203, 213, 224), 2));
         panelWeatherResult.setMaximumSize(new java.awt.Dimension(10000, 300));
-        panelWeatherResult.setPreferredSize(new java.awt.Dimension(830, 300));
+        panelWeatherResult.setPreferredSize(new java.awt.Dimension(830, 250));
         panelWeatherResult.setLayout(new java.awt.GridBagLayout());
 
         lblWeatherHeader.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -242,7 +241,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         lblCityName.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblCityName.setForeground(new java.awt.Color(43, 108, 176));
         lblCityName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCityName.setText("Jakarta, Indonesia");
+        lblCityName.setText("Kota, Negara");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -264,7 +263,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
 
         lblTemperature.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
         lblTemperature.setForeground(new java.awt.Color(229, 62, 62));
-        lblTemperature.setText("32.5°C");
+        lblTemperature.setText("0.0°C");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -274,7 +273,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
 
         lblDescription.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lblDescription.setForeground(new java.awt.Color(74, 85, 104));
-        lblDescription.setText("Deskripsi: Cerah Berawan");
+        lblDescription.setText("Deskripsi: info cuaca");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -284,7 +283,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
 
         lblHumidity.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lblHumidity.setForeground(new java.awt.Color(74, 85, 104));
-        lblHumidity.setText("Kelembaban: 75%");
+        lblHumidity.setText("Kelembaban: 0%");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -294,7 +293,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
 
         lblWindSpeed.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lblWindSpeed.setForeground(new java.awt.Color(74, 85, 104));
-        lblWindSpeed.setText("Kecepatan Angin: 5.2 m/s");
+        lblWindSpeed.setText("Kecepatan Angin: 0.0 m/s");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
@@ -308,7 +307,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         panelHistory.setBackground(new java.awt.Color(255, 255, 255));
         panelHistory.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1)));
         panelHistory.setMaximumSize(new java.awt.Dimension(10000, 450));
-        panelHistory.setPreferredSize(new java.awt.Dimension(830, 450));
+        panelHistory.setPreferredSize(new java.awt.Dimension(830, 350));
         panelHistory.setLayout(new java.awt.BorderLayout());
 
         lblHistoryHeader.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -317,7 +316,7 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         lblHistoryHeader.setText("Riwayat Pengecekan Cuaca");
         panelHistory.add(lblHistoryHeader, java.awt.BorderLayout.NORTH);
 
-        scrollPaneHistory.setPreferredSize(new java.awt.Dimension(800, 320));
+        scrollPaneHistory.setPreferredSize(new java.awt.Dimension(800, 250));
 
         tableWeatherHistory.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tableWeatherHistory.setModel(new javax.swing.table.DefaultTableModel(
@@ -375,6 +374,11 @@ public class WeatherAppGUI extends javax.swing.JFrame {
         btnClearHistory.setBorderPainted(false);
         btnClearHistory.setOpaque(true);
         btnClearHistory.setPreferredSize(new java.awt.Dimension(200, 40));
+        btnClearHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearHistoryActionPerformed(evt);
+            }
+        });
         panelButtons.add(btnClearHistory);
 
         panelHistory.add(panelButtons, java.awt.BorderLayout.SOUTH);
@@ -552,13 +556,41 @@ public class WeatherAppGUI extends javax.swing.JFrame {
             "Sukses", 
             JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnLoadHistoryActionPerformed
+
+    private void btnClearHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearHistoryActionPerformed
+         // Cek apakah table kosong
+        if (tableModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Tabel sudah kosong!", 
+                "Informasi", 
+                JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Konfirmasi sebelum hapus
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "Hapus semua data dari tabel?\n(Data di file CSV tidak akan terhapus)", 
+            "Konfirmasi Hapus", 
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            // Hapus semua row di table
+            tableModel.setRowCount(0);
+
+            JOptionPane.showMessageDialog(this, 
+                "Semua data berhasil dihapus dari tabel!", 
+                "Sukses", 
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnClearHistoryActionPerformed
     
     private void displayWeatherData(WeatherData data) {
         lblCityName.setText(data.getCityName() + ", " + data.getCountry());
         lblTemperature.setText(String.format("%.1f °C", data.getTemperature()));
-        lblDescription.setText(capitalizeFirst(data.getDescription()));
+        lblDescription.setText("Deskripsi: " + capitalizeFirst(data.getDescription()));
         lblHumidity.setText("Kelembaban: " + data.getHumidity() + "%");
-        lblWindSpeed.setText("Angin: " + data.getWindSpeed() + " m/s");
+        lblWindSpeed.setText("Kecepatan Angin: " + data.getWindSpeed() + " m/s");
 
         // Load icon
         loadWeatherIcon(data.getIconName());
